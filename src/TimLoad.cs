@@ -50,7 +50,7 @@ namespace PsxTimFileType
                 {
                     surface = ReadImage(reader, header, colorLookupTable);
 
-                    document = new Document(surface!.Width, surface.Height);
+                    document = new Document(surface.Width, surface.Height);
                     document.Layers.Add(Layer.CreateBackgroundLayer(surface, takeOwnership: true));
                     disposeSurface = false;
                 }
