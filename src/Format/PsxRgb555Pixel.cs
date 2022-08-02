@@ -30,15 +30,20 @@ namespace PsxTimFileType.Format
 
         public ColorBgra ToColorBgra()
         {
-            byte r = (byte)((packedValue & 0x1f) << 3);
-            byte g = (byte)(((packedValue >> 5) & 0x1f) << 3);
-            byte b = (byte)(((packedValue >> 10) & 0x1f) << 3);
+            byte r = Expand5BitColorTo8Bit(packedValue & 0x1f);
+            byte g = Expand5BitColorTo8Bit((packedValue >> 5) & 0x1f);
+            byte b = Expand5BitColorTo8Bit((packedValue >> 10) & 0x1f);
 
             // The PSX has multiple transparency modes that use the high bit of the packed value (packedValue & 0x8000).
             // We treat all images as opaque, which matches the behavior of ImageMagick and tim2bmp.
             // TODO: Allow this behavior to be changed if PDN adds support for a FileType load configuration dialog.
 
             return ColorBgra.FromBgr(b, g, r);
+        }
+
+        private static byte Expand5BitColorTo8Bit(int packedColor)
+        {
+            return (byte)((packedColor << 3) | (packedColor >> 2));
         }
     }
 }
