@@ -160,8 +160,8 @@ namespace PsxTimFileType
 
         private static unsafe void DecodeTwentyFourBitImageData(byte[] source, BlockHeader imageHeader, Surface destination)
         {
-            int width = imageHeader.Width / 2;
-            int height = imageHeader.Height;
+            int width = destination.Width / 2;
+            int height = destination.Height;
 
             fixed (byte* data = source)
             {
@@ -194,7 +194,7 @@ namespace PsxTimFileType
                 ImageType.Indexed4 => imageHeader.Width * 4,
                 ImageType.Indexed8 => imageHeader.Width * 2,
                 ImageType.SixteenBit => imageHeader.Width,
-                ImageType.TwentryFourBit => imageHeader.Width / 2,
+                ImageType.TwentryFourBit => (int)MathF.Ceiling(imageHeader.Width / 1.5f),
                 _ => throw new FormatException($"Unsupported ImageType value: {header.ImageType}."),
             };
 
