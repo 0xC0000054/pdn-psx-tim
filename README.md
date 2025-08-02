@@ -26,11 +26,11 @@ See [License.txt](License.txt) for more information.
 ## Prerequsites
 
 * Visual Studio 2022
-* Paint.NET 4.3.11 or later
+* Paint.NET 5.0.0 or later
 
 ## Building the plugin
 
 * Open the solution
-* Change the PaintDotNet references in the PsxTimFileType project to match your Paint.NET install location
-* Update the post build events to copy the build output to the Paint.NET FileTypes folder
+* Update <PdnRoot> in PsxTimFileType.csproj file to match your Paint.NET install location
+* Ensure the Paint.NET FileTypes folder is writeable, because post build events copy the dll there
 * Build the solution

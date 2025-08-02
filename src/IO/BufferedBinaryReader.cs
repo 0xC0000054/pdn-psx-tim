@@ -121,11 +121,8 @@ namespace PsxTimFileType
             }
             set
             {
-                if (value < 0)
-                {
-                    ExceptionUtil.ThrowArgumentOutOfRangeException(nameof(value), "must be positive");
-                }
-
+                ArgumentOutOfRangeException.ThrowIfNegative(value, nameof(value));
+           
                 VerifyNotDisposed();
 
                 long current = Position;
@@ -166,12 +163,8 @@ namespace PsxTimFileType
         public int Read(byte[] bytes, int offset, int count)
         {
             ArgumentNullException.ThrowIfNull(bytes, nameof(bytes));
-
-            if (count < 0)
-            {
-                ExceptionUtil.ThrowArgumentOutOfRangeException(nameof(count), "must be positive");
-            }
-
+            ArgumentOutOfRangeException.ThrowIfNegative(count, nameof(count));
+            
             VerifyNotDisposed();
 
             if (count == 0)
@@ -236,10 +229,7 @@ namespace PsxTimFileType
         /// <exception cref="ObjectDisposedException">The object has been disposed.</exception>
         public byte[] ReadBytes(int count)
         {
-            if (count < 0)
-            {
-                ExceptionUtil.ThrowArgumentOutOfRangeException(nameof(count), "must be positive");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(count, nameof(count));
 
             VerifyNotDisposed();
 
@@ -453,10 +443,7 @@ namespace PsxTimFileType
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
         private void FillBuffer(int minBytes)
         {
-            if (minBytes < 1)
-            {
-                ExceptionUtil.ThrowArgumentOutOfRangeException(nameof(minBytes), "must be 1 or greater");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(minBytes, 1, nameof(minBytes));
 
             int bytesUnread = readLength - readOffset;
 
@@ -486,10 +473,7 @@ namespace PsxTimFileType
 
         private void VerifyNotDisposed()
         {
-            if (stream == null)
-            {
-                ExceptionUtil.ThrowObjectDisposedException(nameof(BufferedBinaryReader));
-            }
+            ObjectDisposedException.ThrowIf(stream == null, stream);
         }
     }
 }
